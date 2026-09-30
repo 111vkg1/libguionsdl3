@@ -1,0 +1,14 @@
+*.png
+*.jpg
+*.jpeg
+*.log
+*.tmp
+SDL*
+resources*
+*.secret
+*.dev
+.dev*
+dev*
+*.otf
+*.ttf
+*.clst
