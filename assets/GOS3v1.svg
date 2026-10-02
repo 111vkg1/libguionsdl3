@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="117.32724mm"
+   height="40.372566mm"
+   viewBox="0 0 117.32724 40.372566"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <rect
+       x="235.09618"
+       y="479.23453"
+       width="662.42828"
+       height="306.12344"
+       id="rect1" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-5.1238937,-44.869818)">
+    <text
+       xml:space="preserve"
+       transform="matrix(0.19213363,0,0,0.19919846,-42.875119,-58.068814)"
+       id="text1"
+       style="font-weight:bold;font-size:266.667px;font-family:Hack;-inkscape-font-specification:'Hack Bold';writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect1);fill:#212121;fill-opacity:1;stroke:#000000"><tspan
+         x="235.0957"
+         y="715.17216"
+         id="tspan1">G S3</tspan></text>
+    <path
+       id="path4"
+       style="fill:#0011b3;fill-opacity:1;stroke:#000000;stroke-width:0.195634"
+       d="M 64.907497,66.290498 A 15.975836,16.563274 0 0 0 57.652579,51.878176 15.975836,16.563274 0 0 0 38.580317,53.152351 15.975836,16.563274 0 0 0 34.33386,72.471874 l 8.132656,-3.736524 a 7.1181987,7.3843526 0 0 1 0.401153,-6.88402 l 0.0036,-0.006 a 7.1181987,7.3843526 0 0 1 9.780799,-2.464691 7.1181987,7.3843526 0 0 1 2.378403,10.145894 7.1181987,7.3843526 0 0 1 -6.09086,3.545496 v 9.253006 a 15.975836,16.563274 0 0 0 15.31628,-11.85231 15.975836,16.563274 0 0 0 0.651451,-4.182001 z" />
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-![logo](https://imgfy.ru/ib/LItO3JMio8mNWvp_1790952047.webp)
+![logo](assets/GOS3v1.png)
 # **libguionsdl3 (GOS3)**
 Succesfully rewritted from SDL2 to SDL3
 libguionsdl3 (GOS3 or guionsdl3) is GUI header library for SDL3. Requires SDL3_ttf, SDL3, SDL3_image
