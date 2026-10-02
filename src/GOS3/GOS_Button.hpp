@@ -22,11 +22,11 @@ struct GOS_Button : public GOS_Element
             SDL_RenderFillRect(_r, &Face);
         }
     }
-	virtual void Update(int x, int y, SDL_Event ev) override
+	virtual void Update(float x, float y, SDL_Event ev) override
 	{
         Active = (x >= Face.x && y >= Face.y && x <= Face.x+Face.w && y <= Face.y+Face.h);
 	}
-    virtual bool MouseOn(int x, int y) override
+    virtual bool MouseOn(float x, float y) override
     {
         return Active;
     }
@@ -48,7 +48,7 @@ struct GOS_StyledButton : public GOS_Button
     {
         if(Visible){
             SDL_SetRenderDrawColor(_r, (Color.r-50*(Color.r>=50)), (Color.g-50*(Color.g>=50)), (Color.b-50*(Color.b>=50)), Color.a);
-            SDL_Rect BorderFace = {Face.x, Face.y, Face.w+BorderSize, Face.h+BorderSize};
+            SDL_FRect BorderFace = {Face.x, Face.y, Face.w+BorderSize, Face.h+BorderSize};
             SDL_RenderFillRect(_r, &BorderFace);
             if(Active){
                 SDL_SetRenderDrawColor(_r, (Color.r-50*(Color.r>=50)), (Color.g-50*(Color.g>=50)), (Color.b-50*(Color.b>=50)), Color.a);
@@ -60,16 +60,16 @@ struct GOS_StyledButton : public GOS_Button
             SDL_RenderFillRect(_r, &Face);
 	    #ifdef USETEXT
             if(TextureCash.find(Text) == TextureCash.end()){
-                SDL_Surface* _s = TTF_RenderUTF8_Blended(Font, Text.c_str(), TextColor);
+                SDL_Surface* _s = TTF_RenderText_Blended(Font, Text.c_str(), Text.size(), TextColor);
                 TextureCash[Text] = SDL_CreateTextureFromSurface(_r, _s);
-                SDL_FreeSurface(_s);
+                SDL_DestroySurface(_s);
             }
-            if(int(Text.size())*12 >= Face.w){
-                SDL_RenderCopy(_r, TextureCash[Text], nullptr, &Face);
+            if(float(Text.size())*12 >= Face.w){
+                SDL_RenderTexture(_r, TextureCash[Text], nullptr, &Face);
             }
             else{
-                SDL_Rect _t = {Face.x + (Face.w - int(Text.size())*12)/2, Face.y, int(Text.size())*12, Face.h};
-                SDL_RenderCopy(_r, TextureCash[Text], nullptr, &_t);
+                SDL_FRect _t = {Face.x + (Face.w - float(Text.size())*12)/2, Face.y, float(Text.size())*12, Face.h};
+                SDL_RenderTexture(_r, TextureCash[Text], nullptr, &_t);
             }
 	    #endif
         }

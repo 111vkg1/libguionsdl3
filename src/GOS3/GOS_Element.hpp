@@ -9,12 +9,12 @@ struct GOS_Element
     int Id = 0;
     bool Active = false;
     GOS_Color Color = {255, 255, 255, 255};
-    SDL_Rect Face = {0,0,0,0};
+    SDL_FRect Face = {0,0,0,0};
     virtual ~GOS_Element() {};
-	virtual void Update(int x, int y, SDL_Event ev)
+	virtual void Update(float x, float y, SDL_Event ev)
 	{
 	}
-    virtual bool MouseOn(int x, int y)
+    virtual bool MouseOn(float x, float y)
     {
 		return x >= Face.x && y >= Face.y && x <= Face.x + Face.h && y <= Face.y + Face.h;
     }
@@ -27,7 +27,7 @@ struct GOS_Element
     {
 		Color = *_c;
     }
-    virtual void SetFace(SDL_Rect* _f)
+    virtual void SetFace(SDL_FRect* _f)
     {
 		Face = *_f;
     }

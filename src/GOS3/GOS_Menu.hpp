@@ -18,7 +18,7 @@ struct GOS_Menu : public GOS_Element
 		}
 	}
 
-	virtual void Update(int x, int y, SDL_Event ev) override
+	virtual void Update(float x, float y, SDL_Event ev) override
 	{
 		for(auto& child : this->Childs){
 			if(child){
@@ -51,7 +51,7 @@ struct GOS_ScrollingMenu : public GOS_Menu
 	{
 		this->Name = "ScrollingMenu";
 	};
-	virtual void Update(int x, int y, SDL_Event ev) override
+	virtual void Update(float x, float y, SDL_Event ev) override
 	{
 		for(auto& child : this->Childs){
 			if(child){
@@ -59,7 +59,7 @@ struct GOS_ScrollingMenu : public GOS_Menu
 			}
 		}
 		this->Active = (x >= Face.x && y >= Face.y && x <= Face.x+Face.w && y < Face.y+Face.h);
-		if(ev.type == SDL_MOUSEWHEEL && this->Active){
+		if(ev.type == SDL_EVENT_MOUSE_WHEEL && this->Active){
 			if(ev.wheel.y < 0 && !Childs.empty() && Childs.back()->Face.y+Childs.back()->Face.h <= Face.y+Face.h) return;
 			if(ev.wheel.y > 0 && !Childs.empty() && Childs.front()->Face.y >= Face.y) return;
 			for(auto& child : this->Childs){
@@ -76,14 +76,14 @@ struct GOS_ScrollingMenu : public GOS_Menu
 	
 		for(auto& child : this->Childs){
 			if(child->Face.y < this->Face.y && child->Face.y+child->Face.h > this->Face.y){
-				SDL_Rect drawable = {child->Face.x, 
+				SDL_FRect drawable = {child->Face.x, 
 					this->Face.y,
 					child->Face.w,
 					(child->Face.y+child->Face.h) - this->Face.y};
 				SDL_SetRenderDrawColor(_r, child->Color.r, child->Color.g, child->Color.b, child->Color.a);
 				SDL_RenderFillRect(_r, &drawable);
 			} else if(child->Face.y+child->Face.h > this->Face.y+this->Face.h && child->Face.y < this->Face.y+this->Face.h){
-				SDL_Rect drawable = {child->Face.x, 
+				SDL_FRect drawable = {child->Face.x, 
 					child->Face.y,
 					child->Face.w,
 					(this->Face.h) - (child->Face.y - this->Face.y)};
@@ -101,10 +101,10 @@ struct GOS_ScrollingMenu : public GOS_Menu
     	int content_bottom = Childs.back()->Face.y + Childs.back()->Face.h;
    		int content_height = content_bottom - content_top;
     
-    	SDL_Rect scrl_bar_bg = {
+    	SDL_FRect scrl_bar_bg = {
         	this->Face.x + (this->Face.w - 5),
         	this->Face.y,
-        	5,
+        	5.0,
         	this->Face.h
     	};
     	SDL_SetRenderDrawColor(_r, this->Color.r+30, this->Color.g+30, this->Color.b+30, this->Color.a);
@@ -117,10 +117,10 @@ struct GOS_ScrollingMenu : public GOS_Menu
         	if (thumb_h < 20) thumb_h = 20;
         	if (thumb_h > Face.h) thumb_h = Face.h;
         	int thumb_y = Face.y + (int)(progress * (Face.h - thumb_h));
-        	SDL_Rect scrl_bar = {
+        	SDL_FRect scrl_bar = {
             	this->Face.x + (this->Face.w - 5),
             	thumb_y,
-            	5,
+            	5.0,
             	thumb_h
         	};
         	SDL_SetRenderDrawColor(_r, this->Color.r-30, this->Color.g-30, this->Color.b-30, this->Color.a);
@@ -131,13 +131,13 @@ struct GOS_ScrollingMenu : public GOS_Menu
 
 struct GOS_OpenMenu : public GOS_Menu
 {
-	SDL_Rect OpenedFace = this->Face;
+	SDL_FRect OpenedFace = this->Face;
 	bool IsOpened = false;
 	GOS_OpenMenu()
 	{
 		this->Name = "OpenMenu";
 	};
-	virtual void Update(int x, int y, SDL_Event ev) override
+	virtual void Update(float x, float y, SDL_Event ev) override
 	{
 		for(auto& child : this->Childs){
 			if(child){
@@ -145,7 +145,7 @@ struct GOS_OpenMenu : public GOS_Menu
 			}
 		}
 		this->Active = (x >= Face.x && y >= Face.y && x <= Face.x+Face.w && y <= Face.y+Face.h);
-		if(ev.type == SDL_MOUSEBUTTONUP && this->Active && ev.button.button == SDL_BUTTON_LEFT){
+		if(ev.type == SDL_EVENT_MOUSE_BUTTON_UP && this->Active && ev.button.button == SDL_BUTTON_LEFT){
 			this->IsOpened = !this->IsOpened;
 		}	
 	}

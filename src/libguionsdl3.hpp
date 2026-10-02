@@ -26,7 +26,7 @@ class IdAlreadyExistsException : public std::exception
 
 #ifdef USETEXT
 
-#include<SDL3/SDL_ttf.h>
+#include<SDL3_ttf/SDL_ttf.h>
 extern TTF_Font *Font;
 std::map<std::string, SDL_Texture*> TextureCash;
 SDL_Color TextColor = {0,0,0,255};
@@ -40,7 +40,7 @@ SDL_Color TextColor = {0,0,0,255};
 
 #ifdef USETEXT
 
-#include<SDL3/SDL_image.h>
+#include<SDL3_image/SDL_image.h>
 #include<GOS3/GOS_Text.hpp>
 
 #endif // USETEXT
@@ -54,7 +54,7 @@ SDL_Color TextColor = {0,0,0,255};
 struct GOS_GUI
 {
     bool Visible = 1;
-    SDL_Rect Face = {0,0,0,0};
+    SDL_Rect RFace = {0,0,0,0};
     std::vector<std::unique_ptr<GOS_Element>> Childs;
 	int RepeatTicks = 250;
 
@@ -116,7 +116,7 @@ struct GOS_GUI
             }
         }
     }
-    void Update(int x, int y, SDL_Event ev)
+    void Update(float x, float y, SDL_Event ev)
     {
         for(auto& child : Childs) {
             if(child) {
@@ -124,7 +124,7 @@ struct GOS_GUI
             }
         }
 		#ifdef USETEXT
-		if(ev.type == SDL_KEYDOWN && ev.key.keysym.scancode == SDL_SCANCODE_BACKSPACE) {
+		if(ev.type == SDL_EVENT_KEY_DOWN && ev.key.key == SDLK_BACKSPACE) {
         	for(auto& child : Childs) {
             	if(child) {
                 	auto* inputBox = dynamic_cast<GOS_TextInputBox*>(child.get());
@@ -139,25 +139,26 @@ struct GOS_GUI
             	}
         	}
     	}
-		if(ev.type != SDL_TEXTINPUT) return;
-		for(auto& child : Childs) {
-			GOS_TextInputBox* inputBox = dynamic_cast<GOS_TextInputBox*>(child.get());
-            if(inputBox && inputBox->Name == "TextInputBox") {
-            	int now = SDL_GetTicks();
-            	if(inputBox->LastChar != ev.text.text[0]) {
-                	inputBox->Text += ev.text.text;
-                	inputBox->LastChar = ev.text.text[0];
-                	inputBox->LastCharTick = now;
-            	} 
-            	else if(now - inputBox->LastCharTick >= RepeatTicks) {
-                	inputBox->Text += ev.text.text;
-                	inputBox->LastCharTick = now;
-            	}			
-        	}
+		if(ev.type == SDL_EVENT_TEXT_INPUT) {
+			for(auto& child : Childs) {
+				GOS_TextInputBox* inputBox = dynamic_cast<GOS_TextInputBox*>(child.get());
+            	if(inputBox && inputBox->Name == "TextInputBox") {
+            		int now = SDL_GetTicks();
+            		if(inputBox->LastChar != ev.text.text[0]) {
+                		inputBox->Text += ev.text.text;
+                		inputBox->LastChar = ev.text.text[0];
+                		inputBox->LastCharTick = now;
+            		} 
+            		else if(now - inputBox->LastCharTick >= RepeatTicks) {
+                		inputBox->Text += ev.text.text;
+                		inputBox->LastCharTick = now;
+            		}			
+        		}
+			}
 		}
 		#endif
     }
-    GOS_Element* GetElementAt(int x, int y)
+    GOS_Element* GetElementAt(float x, float y)
     {
         for(auto& child : Childs) {
             if(child && child->Visible && child->MouseOn(x, y)) {
