@@ -10,13 +10,15 @@ struct GOS_Element
     bool Active = false;
     GOS_Color Color = {255, 255, 255, 255};
     SDL_FRect Face = {0,0,0,0};
+	GOS_Element *Parent = nullptr;
+	std::vector<std::unique_ptr<GOS_Element>> Childs;
     virtual ~GOS_Element() {};
 	virtual void Update(float x, float y, SDL_Event ev)
 	{
 	}
     virtual bool MouseOn(float x, float y)
     {
-		return x >= Face.x && y >= Face.y && x <= Face.x + Face.h && y <= Face.y + Face.h;
+		return x >= Face.x && y >= Face.y && x <= Face.x + Face.w && y <= Face.y + Face.h;
     }
     virtual void Draw(SDL_Renderer* _r)
     {

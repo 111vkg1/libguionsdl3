@@ -98,6 +98,11 @@ omenu->Close(); // Turn inactive
     - MouseOn() method now save result to Active
     - GOS_StyledButton have a border
 
+### GOS_RadioButton
+- Inherits GOS_Button
+- Must be in GOS_Menu`s
+- Only 1 active radio in 1 menu
+
 ### GOS_Box && GOS_StyledBox
 - Inherits GOS_Element
 - Overrites:

@@ -6,7 +6,6 @@
 struct GOS_Menu : public GOS_Element
 {
 	bool Active = false;
-	std::vector<std::unique_ptr<GOS_Element>> Childs;
 	virtual void Draw(SDL_Renderer* _r) override
 	{
 		if(!Visible) return;
@@ -31,6 +30,7 @@ struct GOS_Menu : public GOS_Element
 	virtual void AddElement(GOS_Element* element)
 	{
 		if(!element) return;
+		element->Parent = this;
 		this->Childs.push_back(std::unique_ptr<GOS_Element>(element));
 	}
 

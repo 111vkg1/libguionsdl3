@@ -32,6 +32,51 @@ struct GOS_Button : public GOS_Element
     }
 };
 
+struct GOS_RadioButton : public GOS_Button
+{
+	GOS_RadioButton()
+	{
+		Name = "RadioButton";
+	};
+	float Border = 2;
+	GOS_Color ActiveColor = this->Color;
+	virtual bool MouseOn(float x, float y) override
+	{
+		return (x >= Face.x && y >= Face.y && x <= Face.x+Face.w && y <= Face.y+Face.h);
+	}
+	virtual void Update(float x, float y, SDL_Event ev) override
+	{
+		if(ev.type == SDL_EVENT_MOUSE_BUTTON_UP && MouseOn(x, y)) {
+			this->Active = !this->Active;
+			if(this->Parent != nullptr) {
+				for(auto& child : this->Parent->Childs) {
+					if(child) {
+						auto* radio = dynamic_cast<GOS_RadioButton*>(child.get());
+						if(radio && radio != this) {
+							radio->Active = false;
+						}
+					}
+				}
+			}
+		}
+	}
+	virtual void Draw(SDL_Renderer* _r) override
+	{
+		if(!Visible) return;
+		SDL_SetRenderDrawColor(_r, Color.r, Color.g, Color.b, Color.a);
+		SDL_RenderFillRect(_r, &this->Face);
+		if(!Active) return;
+		SDL_FRect activeFace = {
+			Face.x + Border,
+			Face.y + Border,
+			Face.w - Border*2,
+			Face.h - Border*2
+		};
+		SDL_SetRenderDrawColor(_r, ActiveColor.r, ActiveColor.g, ActiveColor.b, ActiveColor.a);
+		SDL_RenderFillRect(_r, &activeFace);
+	}
+};
+
 struct GOS_StyledButton : public GOS_Button
 {
     // GOS_StyledButton is GOS_Button with border
