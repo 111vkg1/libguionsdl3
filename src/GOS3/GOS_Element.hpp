@@ -37,6 +37,67 @@ struct GOS_Element
     {
 		return Name;
     }
+	virtual bool StoresId(int id)
+	{
+		for(auto& child : this->Childs) {
+			if(child && child->Id == id){
+				return true;
+			}
+		}
+		return false;
+	}
+	virtual bool StoresName(std::string name)
+	{
+		for(auto& child : this->Childs) {
+			if(child && child->GetName() == name) {
+				return true;
+			}
+		}
+		return false;
+	}
+	// Erasers
+	virtual void EraseById(int id)
+	{
+		if(!StoresId(id)) return;
+		for(auto child = this->Childs.begin(); child != this->Childs.end(); ++child) {
+			if((*child) && (*child)->Id == id) {
+				this->Childs.erase(child);
+				return;
+			}
+		}
+
+	}
+	virtual void EraseByName(std::string name)
+	{
+		if(!StoresName(name)) return;
+		for(auto child = this->Childs.begin(); child != this->Childs.end(); ++child) {
+			if((*child) && (*child)->GetName() == name) {
+				this->Childs.erase(child);
+				return;
+			}
+		}
+	}
+	// Getters
+	virtual GOS_Element* GetById(int id)
+	{
+		if(!StoresId(id)) return nullptr;
+		for(auto& child : this->Childs) {
+			if(child && child->Id == id) {
+				return child.get();
+			}
+		}
+		return nullptr;
+	}
+	virtual GOS_Element* GetByName(std::string name)
+	{
+		if(!StoresName(name)) return nullptr;
+		for(auto& child : this->Childs) {
+			if(child && child->GetName() == name) {
+				return child.get();
+			}
+		}
+		return nullptr;
+	}
 };
 
 #endif

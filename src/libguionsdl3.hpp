@@ -88,7 +88,41 @@ struct GOS_GUI
             }
         }
     }
-    GOS_Element* GetSelected()
+	// Getters
+    GOS_Element* GetElementAt(int x, int y)
+    {
+        for(auto& child : Childs) {
+            if(child && child->Visible && child->MouseOn(x, y)) {
+                return child.get();
+            }
+        }
+        return nullptr;
+    }
+    GOS_Element* GetElementByName(std::string Name)
+    {
+        for(auto& child : Childs) {
+        	if(child && child->GetName() == Name) {
+           		return child.get();
+           	}
+			if(child->Childs.size() <= 0) continue;
+        	if(!child->StoresName(Name)) continue;
+			return child->GetByName(Name);
+		}
+        return nullptr;
+    }
+    GOS_Element* GetElementById(int id)
+    {
+        for(auto& child : Childs) {
+            if(child && child->Id == id) {
+                return child.get();
+            }
+			if(child->Childs.size() <= 0) continue;
+        	if(!child->StoresId(id)) continue;
+			return child->GetById(id);
+		}
+        return nullptr;
+    }
+	GOS_Element* GetSelected()
     {
         for(auto it = Childs.rbegin(); it != Childs.rend(); ++it) {
             auto& child = *it;
@@ -100,22 +134,34 @@ struct GOS_GUI
         }
         return nullptr;
     }
+	// Erasers
     void EraseElementByName(std::string name)
     {
-        for(size_t it = 0; it < Childs.size(); it++) {
-            if(Childs[it] && Childs[it]->GetName() == name) {
-                Childs.erase(Childs.begin() + it);
+    	for(auto child = Childs.begin(); child != Childs.end(); ++child) {
+            if(*child && (*child)->GetName() == name) {
+                 Childs.erase(child);
+				 return;
             }
-        }
-    }
+			if((*child)->Childs.size() <= 0) continue;
+        	if(!(*child)->StoresName(name)) continue;
+			(*child)->EraseByName(name);
+			return;
+		}
+	}
     void EraseElementById(int id)
     {
-        for(size_t it = 0; it < Childs.size(); it++) {
-            if(Childs[it] && Childs[it]->Id == id) {
-                Childs.erase(Childs.begin() + it);
+        for(auto child = Childs.begin(); child != Childs.end(); ++child) {
+            if(*child && (*child)->Id == id) {
+                Childs.erase(child);
+				return;
             }
-        }
-    }
+			if((*child)->Childs.size() <= 0) continue;
+        	if(!(*child)->StoresId(id)) continue;
+			(*child)->EraseById(id);
+			return;
+		}
+	}
+	// Update
     void Update(float x, float y, SDL_Event ev)
     {
         for(auto& child : Childs) {
@@ -157,33 +203,6 @@ struct GOS_GUI
 			}
 		}
 		#endif
-    }
-    GOS_Element* GetElementAt(float x, float y)
-    {
-        for(auto& child : Childs) {
-            if(child && child->Visible && child->MouseOn(x, y)) {
-                return child.get();
-            }
-        }
-        return nullptr;
-    }
-    GOS_Element* GetElementByName(std::string Name)
-    {
-        for(auto& child : Childs) {
-            if(child && child->Visible && child->Name == Name) {
-                return child.get();
-            }
-        }
-        return nullptr;
-    }
-    GOS_Element* GetElementById(int id)
-    {
-        for(auto& child : Childs) {
-            if(child && child->Id == id) {
-                return child.get();
-            }
-        }
-        return nullptr;
     }
 };
 

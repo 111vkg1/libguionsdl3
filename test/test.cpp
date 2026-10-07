@@ -121,8 +121,10 @@ int main(int argc, char* argv[])
 		while(SDL_PollEvent(&event)){
 	    	if(event.button.button == SDL_BUTTON_RIGHT){
 	       		run = false; 
-		 		break;
    	    	}
+			if(event.button.button == SDL_BUTTON_LEFT) {
+				gui.EraseElementById(3);
+			}
 			float mx, my;
     		SDL_GetMouseState(&mx, &my);
 			gui.Update(mx, my, event);
@@ -130,6 +132,7 @@ int main(int argc, char* argv[])
 		SDL_PumpEvents();
 		gui.Draw(renderer);
 		SDL_RenderPresent(renderer);
+		SDL_Delay(16);
     } 
     SDL_Quit();
     return 0;
