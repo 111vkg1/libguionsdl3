@@ -33,23 +33,23 @@ SDL_Color TextColor = {0,0,0,255};
 
 #endif
 
-#include<GOS3/GOS_Color.hpp>
-#include<GOS3/GOS_Element.hpp>
-#include<GOS3/GOS_Box.hpp>
-#include<GOS3/GOS_Button.hpp>
+#include<libguionsdl3/GOS3/GOS_Color.hpp>
+#include<libguionsdl3/GOS3/GOS_Element.hpp>
+#include<libguionsdl3/GOS3/GOS_Box.hpp>
+#include<libguionsdl3/GOS3/GOS_Button.hpp>
 
 #ifdef USETEXT
 
 #include<SDL3_image/SDL_image.h>
-#include<GOS3/GOS_Text.hpp>
+#include<libguionsdl3/GOS3/GOS_Text.hpp>
 
 #endif // USETEXT
 
 #ifdef USETEXTURES
-#include<GOS3/GOS_Textured.hpp>
+#include<libguionsdl3/GOS3/GOS_Textured.hpp>
 #endif
 
-#include<GOS3/GOS_Menu.hpp>
+#include<libguionsdl3/GOS3/GOS_Menu.hpp>
 
 struct GOS_GUI
 {
