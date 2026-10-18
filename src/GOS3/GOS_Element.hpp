@@ -4,6 +4,8 @@
 struct GOS_Element
 {
     bool Visible = true;
+	bool Dragable = false;
+	bool Dragging = false;
     std::string Name = "Element";
     std::string Text = "None";
     int Id = 0;

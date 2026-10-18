@@ -7,6 +7,21 @@ struct GOS_Box : public GOS_Element
 	{
 		Name = "Box";
 	};
+	virtual void Update(float x, float y, SDL_Event ev)
+	{
+		if(this->Dragable){
+			if(ev.type == SDL_EVENT_MOUSE_BUTTON_DOWN && MouseOn(x, y)) this->Dragging = true;
+			if(ev.type == SDL_EVENT_MOUSE_BUTTON_UP) this->Dragging = false;
+			if(Dragging && MouseOn(x, y)){
+				this->Face = {
+					x - this->Face.w/2,
+					y - this->Face.h/2,
+					this->Face.w,
+					this->Face.h
+				};
+			}
+		}
+	}
 	virtual std::string GetName() override
 	{
 		return Name;

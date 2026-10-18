@@ -104,7 +104,14 @@ int main(int argc, char* argv[])
 	sm_bx2->Color.SetAllTo(100);
 	sm_bx2->Color.r = 255;
 	sm->AddElement(sm_bx2);
-	
+
+	GOS_MeterHorizontal *mhl = new GOS_MeterHorizontal();
+	mhl->Color.SetAllTo(200);
+	SDL_FRect ddd = {200, 400, 100, 5};
+	mhl->SetFace(&ddd);
+	mhl->SetHolderColor(&(mhl->Color));
+
+	gui.AddElement(mhl);
 	gui.AddElement(box);
     gui.AddElement(button);
     gui.AddElement(text);
