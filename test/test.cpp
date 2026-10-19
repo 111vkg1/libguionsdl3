@@ -111,6 +111,12 @@ int main(int argc, char* argv[])
 	mhl->SetFace(&ddd);
 	mhl->SetHolderColor(&(mhl->Color));
 
+	GOS_MeterHorizontal *mvl = new GOS_MeterVertical();
+	mvl->Color.SetRandom();
+	ddd = {200, 425, 5, 100};
+	mvl->SetFace(&ddd);
+	mvl->SetHolderColor(&(mvl->Color));
+
 	gui.AddElement(mhl);
 	gui.AddElement(box);
     gui.AddElement(button);
@@ -120,6 +126,7 @@ int main(int argc, char* argv[])
 	gui.AddElement(ti);
 	gui.AddElement(om);
 	gui.AddElement(sm);
+	gui.AddElement(mvl);
 	bool run = true;
     while(run) 
     {
@@ -131,6 +138,9 @@ int main(int argc, char* argv[])
    	    	}
 			if(event.button.button == SDL_BUTTON_LEFT) {
 				gui.EraseElementById(3);
+			}
+			if(gui.GetElementById(0)->GetValue() == 1){
+				run = false;
 			}
 			float mx, my;
     		SDL_GetMouseState(&mx, &my);

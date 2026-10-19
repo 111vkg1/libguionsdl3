@@ -39,6 +39,10 @@ struct GOS_Element
     {
 		return Name;
     }
+	virtual float GetValue()
+	{
+		return 0;
+	}
 	virtual bool StoresId(int id)
 	{
 		for(auto& child : this->Childs) {
